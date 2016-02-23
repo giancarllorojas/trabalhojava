@@ -4,16 +4,32 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Alterando sala: <c:out value='${sala.numero}' /></title>
+<title>Alterando turma</title>
 </head>
 <body>
-	<form method="GET" action="">
-		Número: <input type="text" name="Numero" value="<c:out value='${sala.numero}'/>"><br>
-		Capacidade: <input type="text" name="Capacidade" value="<c:out value='${sala.capacidade}'/>"><br>
-		<input type="submit" value="Alterar"/>
-		<input type="hidden" name="control" value="Salas" />
+	<form method="GET" action="" id="formturma">
+		Disciplina: <select name="Disciplina" form="formturma">
+			<c:forEach items="${disciplinas}" var="valor">
+			   <option value="<c:out value="${valor.codigo}"/>"<c:if test="${valor.codigo == turma.disciplina}">selected</c:if>><c:out value="${valor.codigo}"/></option>
+				
+			</c:forEach>
+		</select><br>
+		Professor: <select name="Professor" form="formturma">
+		  	<c:forEach items="${professores}" var="valor">
+			   <option value="<c:out value="${valor.nome}"/>"<c:if test="${valor.nome == turma.professor}">selected</c:if>><c:out value="${valor.nome}"/></option>
+			</c:forEach>
+		</select><br>
+		Sala: <select name="Sala" form="formturma">
+		  	<c:forEach items="${salas}" var="valor">
+			   <option value="<c:out value="${valor.numero}"/>"<c:if test="${valor.numero == turma.sala}">selected</c:if>><c:out value="${valor.numero}"/></option>
+			</c:forEach>
+		</select><br>
+		Horário: <input type="text" name="Horario" value="${turma.horario}"><br>
+		<input type="submit" value="Cadastrar"/>
+		<input type="hidden" name="ProfAntigo" value="${turma.professor}" />
+		<input type="hidden" name="DiscAntigo" value="${turma.disciplina}" />
+		<input type="hidden" name="control" value="Turmas" />
 		<input type="hidden" name="action" value="Altera" />
-		<input type="hidden" name="NumeroAntigo" value="${sala.numero}" />
 	</form>
 </body>
 </html>

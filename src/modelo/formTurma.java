@@ -26,6 +26,14 @@ public class formTurma {
 		return this.horario;
 	}
 	
+	public String getDiscAntigo(){
+		return this.disc_antigo;
+	}
+	
+	public String getProfAntigo(){
+		return this.prof_antigo;
+	}
+	
 	public void setProfessor(String prof){
 		this.professor = prof;
 	}
@@ -46,7 +54,7 @@ public class formTurma {
 		this.disc_antigo = d_a;
 	}
 	
-	public void setProfessor(String prof){
-		this.professor = prof;
+	public void setProfAntigo(String prof){
+		this.prof_antigo = prof;
 	}
 }

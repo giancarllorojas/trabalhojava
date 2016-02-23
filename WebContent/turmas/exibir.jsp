@@ -6,24 +6,28 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Exibindo Salas</title>
+<title>Exibindo Turmas</title>
 </head>
 <body>
-<h2>Lista de Salas</h2>
+<h2>Lista de Turmas</h2>
 <table border="1">
 	<tr>
-		<td>Número</td>
-		<td>Capacidade</td>
+		<td>Disciplina</td>
+		<td>Professor</td>
+		<td>Sala</td>
+		<td>Horário</td>
 	</tr>
-	<c:forEach items="${salas}" var="current">
+	<c:forEach items="${turmas}" var="current">
 	        <tr>
-	          <td><c:out value="${current.numero}" /></td>
-	          <td><c:out value="${current.capacidade}" /></td>
-	          <td><a href="?control=Salas&action=Deleta&Numero=<c:out value='${current.numero}' />" >Deletar</a></td>
-	          <td><a href="?control=Salas&action=Alterar&NumeroAntigo=<c:out value='${current.numero}' />" >Alterar</a></td>
+	          <td><c:out value="${current.disciplina}" /></td>
+	          <td><c:out value="${current.professor}" /></td>
+	          <td><c:out value="${current.sala}" /></td>
+	          <td><c:out value="${current.horario}" /></td>
+	          <td><a href="?control=Turmas&action=Deleta&Disciplina=<c:out value='${current.disciplina}' />&Professor=<c:out value='${current.professor}' />" >Deletar</a></td>
+	          <td><a href="?control=Turmas&action=Alterar&DiscAntigo=<c:out value='${current.disciplina}' />&ProfAntigo=<c:out value='${current.professor}' />" >Alterar</a></td>
 	        </tr>
 	</c:forEach>
 </table>
-<a href="?control=Salas&action=Inserir">Cadastrar nova sala</a>
+<a href="?control=Turmas&action=Inserir">Cadastrar nova turma</a>
 </body>
 </html>
