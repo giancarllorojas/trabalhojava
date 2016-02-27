@@ -2,9 +2,16 @@ package modelo;
 
 public class formDisciplina {
 	//variavel de controle pra alteração
+	@Obrigatorio( false )
 	String cod_antigo;
+	
+    @Obrigatorio( true )
 	String codigo;
+    
+    @Obrigatorio( true )
 	String nome;
+    
+    @Obrigatorio( true )
 	String ementa;
 	
 	public String getCodigo(){

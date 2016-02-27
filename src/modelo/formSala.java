@@ -2,9 +2,13 @@ package modelo;
 
 public class formSala {
 	//controle para alteração
+	@Obrigatorio( false )
 	String num_antigo;
 	
+	@Obrigatorio( true )
 	String numero;
+	
+	@Obrigatorio( true )
 	String capacidade;
 	
 	public String getNumero(){

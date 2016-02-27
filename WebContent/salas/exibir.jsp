@@ -19,8 +19,8 @@
 	        <tr>
 	          <td><c:out value="${current.numero}" /></td>
 	          <td><c:out value="${current.capacidade}" /></td>
-	          <td><a href="?control=Salas&action=Deleta&Numero=<c:out value='${current.numero}' />" >Deletar</a></td>
-	          <td><a href="?control=Salas&action=Alterar&NumeroAntigo=<c:out value='${current.numero}' />" >Alterar</a></td>
+	          <td><a href="?control=Salas&action=Deleta&Numero=<c:out value='${current.numero}' />&Capacidade=<c:out value='${current.capacidade}' />" >Deletar</a></td>
+	          <td><a href="?control=Salas&action=Alterar&NumeroAntigo=<c:out value='${current.numero}' />&Numero=<c:out value='${current.numero}' />&Capacidade=<c:out value='${current.capacidade}' />" >Alterar</a></td>
 	        </tr>
 	</c:forEach>
 </table>

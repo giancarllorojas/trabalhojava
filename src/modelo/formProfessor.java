@@ -2,8 +2,13 @@ package modelo;
 
 public class formProfessor {
 	//variavel de controle
+	@Obrigatorio( false )
 	String nome_antigo;
+	
+	@Obrigatorio( true )
 	String nome;
+	
+	@Obrigatorio( true )
 	String email;
 	
 	public String getNome(){

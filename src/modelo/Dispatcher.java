@@ -1,6 +1,7 @@
 package modelo;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -38,6 +39,18 @@ public class Dispatcher {
         return null;
     }
     
+    public Map<String, Boolean> getObrigatorios(Object classe){
+    	Map<String, Boolean> obrigatorios = new HashMap<String, Boolean>();
+    	for(Field field : classe.getClass().getDeclaredFields()){
+			  String name = field.getName();
+			  Obrigatorio an = field.getAnnotation(Obrigatorio.class);
+			  if(an.value()){
+				  obrigatorios.put(name, an.value());
+			  }
+		}
+    	return obrigatorios;
+    }
+    
     private Map<String, Method> buscaSetters( Class<?> classe ) {
     	Method[] metodos = classe.getDeclaredMethods();
     	Map<String, Method> setters = new HashMap<String, Method>();
@@ -51,7 +64,7 @@ public class Dispatcher {
         return setters;
     }
     
-    public void preencheForm( Object form, Map<String, String> parametros ) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    public void preencheForm( Object form, Map<String, String> parametros ) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, ObrigatorioException {
         Map<String, Method> setters = buscaSetters( form.getClass() );
         
         for (Map.Entry<String, String> par : parametros.entrySet()){

@@ -21,8 +21,8 @@
 	          <td><c:out value="${current.codigo}" /></td>
 	          <td><c:out value="${current.nome}" /></td>
 	          <td><c:out value="${current.ementa}" /></td>
-	          <td><a href="?control=Disciplinas&action=Deleta&Codigo=<c:out value='${current.codigo}' />" >Deletar</a></td>
-	          <td><a href="?control=Disciplinas&action=Alterar&CodAntigo=<c:out value='${current.codigo}' />" >Alterar</a></td>
+	          <td><a href="?control=Disciplinas&action=Deleta&Codigo=<c:out value='${current.codigo}' />&Nome=<c:out value='${current.nome}' />&Ementa=<c:out value='${current.ementa}' />" >Deletar</a></td>
+	          <td><a href="?control=Disciplinas&action=Alterar&CodAntigo=<c:out value='${current.codigo}' />&Codigo=<c:out value='${current.codigo}' />&Nome=<c:out value='${current.nome}' />&Ementa=<c:out value='${current.ementa}' />" >Alterar</a></td>
 	        </tr>
 	</c:forEach>
 </table>

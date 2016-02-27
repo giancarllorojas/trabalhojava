@@ -1,7 +1,7 @@
 package controladores;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -12,6 +12,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import modelo.ObrigatorioException;
 
 
 /**
@@ -51,8 +53,19 @@ public class Framew extends HttpServlet {
         	Object o = dis.cria(classe, request, response);
         	Method m = dis.buscaMetodo(o.getClass(), metodo);
         	Object form = dis.instanciaForm( m );
+        	
+        	
+            
         	if(form != null){
+        		Map<String, Boolean> obrigatorios = dis.getObrigatorios(form);
         		dis.preencheForm(form, parametros);
+        		for(Map.Entry<String, Boolean> par : obrigatorios.entrySet()){
+        			Field f = form.getClass().getDeclaredField(par.getKey());
+        			f.setAccessible(true);
+                	if(f.get(form) == null){
+                		throw new ObrigatorioException();
+                	}
+                }
             	m.invoke(o, form);
         	}else{
         		m.invoke(o);

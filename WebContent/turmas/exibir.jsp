@@ -23,8 +23,8 @@
 	          <td><c:out value="${current.professor}" /></td>
 	          <td><c:out value="${current.sala}" /></td>
 	          <td><c:out value="${current.horario}" /></td>
-	          <td><a href="?control=Turmas&action=Deleta&Disciplina=<c:out value='${current.disciplina}' />&Professor=<c:out value='${current.professor}' />" >Deletar</a></td>
-	          <td><a href="?control=Turmas&action=Alterar&DiscAntigo=<c:out value='${current.disciplina}' />&ProfAntigo=<c:out value='${current.professor}' />" >Alterar</a></td>
+	          <td><a href="?control=Turmas&action=Deleta&Disciplina=<c:out value='${current.disciplina}' />&Professor=<c:out value='${current.professor}' />&Sala=<c:out value='${current.sala}' />&Horario=<c:out value='${current.horario}' />" >Deletar</a></td>
+	          <td><a href="?control=Turmas&action=Alterar&DiscAntigo=<c:out value='${current.disciplina}' />&ProfAntigo=<c:out value='${current.professor}' />&Disciplina=<c:out value='${current.disciplina}' />&Professor=<c:out value='${current.professor}' />&Sala=<c:out value='${current.sala}' />&Horario=<c:out value='${current.horario}' />" >Alterar</a></td>
 	        </tr>
 	</c:forEach>
 </table>

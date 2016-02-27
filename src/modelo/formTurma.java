@@ -2,12 +2,22 @@ package modelo;
 
 public class formTurma {
 	//para controle
+	@Obrigatorio( false )
 	String disc_antigo;
+	
+	@Obrigatorio( false )
 	String prof_antigo;
 	
+	@Obrigatorio( true )
 	String disciplina;
+	
+	@Obrigatorio( true )
 	String professor;
+	
+	@Obrigatorio( true )
 	String sala;
+	
+	@Obrigatorio( true )
 	String horario;
 	
 	public String getProfessor(){

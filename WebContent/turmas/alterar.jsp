@@ -24,7 +24,7 @@
 			   <option value="<c:out value="${valor.numero}"/>"<c:if test="${valor.numero == turma.sala}">selected</c:if>><c:out value="${valor.numero}"/></option>
 			</c:forEach>
 		</select><br>
-		Horário: <input type="text" name="Horario" value="${turma.horario}"><br>
+		Horário: <input type="text" name="Horario" value="${turma.horario }"><br>
 		<input type="submit" value="Cadastrar"/>
 		<input type="hidden" name="ProfAntigo" value="${turma.professor}" />
 		<input type="hidden" name="DiscAntigo" value="${turma.disciplina}" />
