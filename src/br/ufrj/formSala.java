@@ -1,9 +1,8 @@
-package modelo;
+package br.ufrj;
 
 public class formSala {
-	//controle para alteração
 	@Obrigatorio( false )
-	String num_antigo;
+	String id;
 	
 	@Obrigatorio( true )
 	String numero;
@@ -19,8 +18,8 @@ public class formSala {
 		return this.capacidade;
 	}
 	
-	public String getNumeroAntigo(){
-		return this.num_antigo;
+	public String getId(){
+		return this.id;
 	}
 	
 	public void setNumero(String num){
@@ -31,7 +30,7 @@ public class formSala {
 		this.capacidade = cap;
 	}
 	
-	public void setNumeroAntigo(String num){
-		this.num_antigo = num;
+	public void setId(String id){
+		this.id = id;
 	}
 }

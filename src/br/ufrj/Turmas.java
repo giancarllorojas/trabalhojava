@@ -1,4 +1,4 @@
-package modelo;
+package br.ufrj;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -23,7 +23,7 @@ public class Turmas {
 	
 	HttpServletRequest request;
 	HttpServletResponse response;
-	File arquivo = new File("/home/defense/workspace/trabp2/data/turmas.csv");
+	File arquivo = new File("/home/defense/workspace/trabalhofinal/csvs/turmas.csv");
 	
 	public Turmas(HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException{		
 		this.CarregaDados();
@@ -42,11 +42,13 @@ public class Turmas {
 		while(scan.hasNextLine()){
 			String linha = scan.nextLine();
             String[] dados = linha.split(",");
-            String turma_disciplina = dados[0];
-            String turma_professor = dados[1];
-            String turma_sala = dados[2];
-            String turma_horario = dados[3];
+            String turma_id = dados[0];
+            String turma_disciplina = dados[1];
+            String turma_professor = dados[2];
+            String turma_sala = dados[3];
+            String turma_horario = dados[4];
             formTurma form = new formTurma();
+            form.setId(turma_id);
             form.setDisciplina(turma_disciplina);
             form.setProfessor(turma_professor);
             form.setSala(turma_sala);
@@ -59,7 +61,7 @@ public class Turmas {
 	private void SalvaDados() throws IOException{
 		String dados = "";
 		for(formTurma t : this.turmas){
-			dados += t.getDisciplina() + "," + t.getProfessor() + "," + t.getSala() + "," + t.getHorario() + "\n";
+			dados += t.getId() + "," + t.getDisciplina() + "," + t.getProfessor() + "," + t.getSala() + "," + t.getHorario() + "\n";
 		}
 		FileWriter fw = new FileWriter(this.arquivo.getAbsoluteFile());
 		BufferedWriter bw = new BufferedWriter(fw);
@@ -67,38 +69,48 @@ public class Turmas {
 		bw.close();
 	}
 	
-	//Pega turma pela disciplina e professor
-	public formTurma getTurma(String turma_disciplina, String turma_professor){
+	//Pega turma pelo ID
+	public formTurma getTurma(String turma_id){
 		for(formTurma t: this.turmas){
-			if(t.getDisciplina().equals(turma_disciplina) && t.getProfessor().equals(turma_professor)){
+			if(t.getId().equals(turma_id)){
 				return t;
 			}
 		}
 		return null;
 	}
 	
+	private String pegaUltimoId(){
+		if (this.disciplinas != null && !this.disciplinas.isEmpty()) {
+			return this.disciplinas.get(this.disciplinas.size() - 1).id;
+		}else{
+			return "0";
+		}
+	}
+	
 	/*
 	 * Insere nova Turma no ArrayList turmas e salva os dados no CSV
 	 */
 	public void Insere(formTurma f) throws IOException{
+		Integer id = Integer.valueOf(this.pegaUltimoId()) + 1;
+		f.setId(id.toString());
 		this.turmas.add(f);
 		this.SalvaDados();
 		
-		response.sendRedirect("/trabp2/do/?control=Turmas&action=Exibir");
+		response.sendRedirect(request.getRequestURL() + "?control=Turmas&action=Exibir");
 		return;
 	}
 	
 	/*
 	 * Remove Turma dado um professor e uma disciplina
 	 */
-	public void Deleta(formTurma f) throws IOException{
-		formTurma t = this.getTurma(f.getDisciplina(), f.getProfessor());
+	public void Deleta(String turma_id) throws IOException{
+		formTurma t = this.getTurma(turma_id);
 		if(t != null){
 			this.turmas.remove(this.turmas.indexOf(t));
 			this.SalvaDados();
 		}
 		
-		response.sendRedirect("/trabp2/do/?control=Turmas&action=Exibir");
+		response.sendRedirect(request.getRequestURL() + "?control=Turmas&action=Exibir");
 		return;
 	}
 	
@@ -106,13 +118,13 @@ public class Turmas {
 	 * Altera turma
 	 */
 	public void Altera(formTurma f) throws IOException{
-		formTurma t = this.getTurma(f.getDisciplina(), f.getProfessor());
+		formTurma t = this.getTurma(f.getId());
 		if(t != null){
 			this.turmas.set(this.turmas.indexOf(t), f);
 			this.SalvaDados();
 		}
 		
-		response.sendRedirect("/trabp2/do/?control=Turmas&action=Exibir");
+		response.sendRedirect(request.getRequestURL() + "?control=Turmas&action=Exibir");
 		return;
 	}
 	
@@ -124,8 +136,8 @@ public class Turmas {
 		this.request.getRequestDispatcher( "/turmas/exibir.jsp" ).forward( request, response );
 	}
 	
-	public void Alterar(formTurma f) throws ServletException, IOException{
-		formTurma t = this.getTurma(f.getDiscAntigo(), f.getProfAntigo());
+	public void Alterar(String turma_id) throws ServletException, IOException{
+		formTurma t = this.getTurma(turma_id);
 		if(t != null){
 			this.request.setAttribute("disciplinas", this.disciplinas);
 			this.request.setAttribute("professores", this.professores);

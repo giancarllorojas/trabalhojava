@@ -1,0 +1,21 @@
+body{
+	text-decoration: none;
+	margin: 0 0 0 0;
+	padding: 0;
+	text-align:center;
+}
+a:hover, a:visited, a:link, a:active
+{
+    text-decoration: none;
+}
+.topo{
+	background-color:#303F9F;
+	padding:20px;
+	margin-bottom:15px;
+}
+.titulo{
+	color:white;
+}
+.tabela{
+	margin: 0 auto;
+}

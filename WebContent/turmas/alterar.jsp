@@ -5,8 +5,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Alterando turma</title>
+<link rel="stylesheet" type="text/css" href="../estilo.css">
+
 </head>
 <body>
+<div class="topo">
+	<h2><a  class="titulo" href="${pageContext.request.contextPath}">Trabalho Final - JAVA</a></h2>
+</div>
+
 	<form method="GET" action="" id="formturma">
 		Disciplina: <select name="Disciplina" form="formturma">
 			<c:forEach items="${disciplinas}" var="valor">
@@ -25,9 +31,8 @@
 			</c:forEach>
 		</select><br>
 		Horário: <input type="text" name="Horario" value="${turma.horario }"><br>
-		<input type="submit" value="Cadastrar"/>
-		<input type="hidden" name="ProfAntigo" value="${turma.professor}" />
-		<input type="hidden" name="DiscAntigo" value="${turma.disciplina}" />
+		<input type="submit" value="Alterar"/>
+		<input type="hidden" name="Id" value="${turma.id}" />
 		<input type="hidden" name="control" value="Turmas" />
 		<input type="hidden" name="action" value="Altera" />
 	</form>

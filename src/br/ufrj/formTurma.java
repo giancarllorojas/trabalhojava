@@ -1,12 +1,8 @@
-package modelo;
+package br.ufrj;
 
 public class formTurma {
-	//para controle
 	@Obrigatorio( false )
-	String disc_antigo;
-	
-	@Obrigatorio( false )
-	String prof_antigo;
+	String id;
 	
 	@Obrigatorio( true )
 	String disciplina;
@@ -36,12 +32,8 @@ public class formTurma {
 		return this.horario;
 	}
 	
-	public String getDiscAntigo(){
-		return this.disc_antigo;
-	}
-	
-	public String getProfAntigo(){
-		return this.prof_antigo;
+	public String getId(){
+		return this.id;
 	}
 	
 	public void setProfessor(String prof){
@@ -60,11 +52,7 @@ public class formTurma {
 		this.horario = hor;
 	}
 	
-	public void setDiscAntigo(String d_a){
-		this.disc_antigo = d_a;
-	}
-	
-	public void setProfAntigo(String prof){
-		this.prof_antigo = prof;
+	public void setId(String id){
+		this.id = id;
 	}
 }

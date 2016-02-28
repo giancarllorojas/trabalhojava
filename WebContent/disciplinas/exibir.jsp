@@ -7,25 +7,30 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Exibindo Disciplinas</title>
+<link rel="stylesheet" type="text/css" href="../estilo.css">
 </head>
 <body>
+<div class="topo">
+	<h2><a  class="titulo" href="${pageContext.request.contextPath}">Trabalho Final - JAVA</a></h2>
+</div>
+
 <h2>Lista de disciplinas</h2>
-<table border="1">
+<table border="1" class="tabela">
 	<tr>
 		<td>Código</td>
 		<td>Nome</td>
 		<td>Ementa</td>
 	</tr>
-	<c:forEach items="${discs}" var="current">
+	<c:forEach items="${discs}" var="i">
 	        <tr>
-	          <td><c:out value="${current.codigo}" /></td>
-	          <td><c:out value="${current.nome}" /></td>
-	          <td><c:out value="${current.ementa}" /></td>
-	          <td><a href="?control=Disciplinas&action=Deleta&Codigo=<c:out value='${current.codigo}' />&Nome=<c:out value='${current.nome}' />&Ementa=<c:out value='${current.ementa}' />" >Deletar</a></td>
-	          <td><a href="?control=Disciplinas&action=Alterar&CodAntigo=<c:out value='${current.codigo}' />&Codigo=<c:out value='${current.codigo}' />&Nome=<c:out value='${current.nome}' />&Ementa=<c:out value='${current.ementa}' />" >Alterar</a></td>
+	          <td><c:out value="${i.codigo}" /></td>
+	          <td><c:out value="${i.nome}" /></td>
+	          <td><c:out value="${i.ementa}" /></td>
+	          <td><a href="?control=Disciplinas&action=Deleta&Id=<c:out value='${i.id}' />" >Deletar</a></td>
+	          <td><a href="?control=Disciplinas&action=Alterar&Id=<c:out value='${i.id}' />" >Alterar</a></td>
 	        </tr>
 	</c:forEach>
-</table>
+</table><br>
 <a href="?control=Disciplinas&action=Inserir">Cadastrar nova disciplina</a>
 </body>
 </html>

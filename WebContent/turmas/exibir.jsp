@@ -7,24 +7,30 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Exibindo Turmas</title>
+<link rel="stylesheet" type="text/css" href="../estilo.css">
+
 </head>
 <body>
+<div class="topo">
+	<h2><a  class="titulo" href="${pageContext.request.contextPath}">Trabalho Final - JAVA</a></h2>
+</div>
+
 <h2>Lista de Turmas</h2>
-<table border="1">
+<table border="1" class="tabela">
 	<tr>
 		<td>Disciplina</td>
 		<td>Professor</td>
 		<td>Sala</td>
 		<td>Horário</td>
 	</tr>
-	<c:forEach items="${turmas}" var="current">
+	<c:forEach items="${turmas}" var="i">
 	        <tr>
-	          <td><c:out value="${current.disciplina}" /></td>
-	          <td><c:out value="${current.professor}" /></td>
-	          <td><c:out value="${current.sala}" /></td>
-	          <td><c:out value="${current.horario}" /></td>
-	          <td><a href="?control=Turmas&action=Deleta&Disciplina=<c:out value='${current.disciplina}' />&Professor=<c:out value='${current.professor}' />&Sala=<c:out value='${current.sala}' />&Horario=<c:out value='${current.horario}' />" >Deletar</a></td>
-	          <td><a href="?control=Turmas&action=Alterar&DiscAntigo=<c:out value='${current.disciplina}' />&ProfAntigo=<c:out value='${current.professor}' />&Disciplina=<c:out value='${current.disciplina}' />&Professor=<c:out value='${current.professor}' />&Sala=<c:out value='${current.sala}' />&Horario=<c:out value='${current.horario}' />" >Alterar</a></td>
+	          <td><c:out value="${i.disciplina}" /></td>
+	          <td><c:out value="${i.professor}" /></td>
+	          <td><c:out value="${i.sala}" /></td>
+	          <td><c:out value="${i.horario}" /></td>
+	          <td><a href="?control=Turmas&action=Deleta&Id=<c:out value='${i.id}' />">Deletar</a></td>
+	          <td><a href="?control=Turmas&action=Alterar&Id=<c:out value='${i.id}' />" >Alterar</a></td>
 	        </tr>
 	</c:forEach>
 </table>

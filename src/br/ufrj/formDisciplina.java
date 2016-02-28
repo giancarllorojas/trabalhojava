@@ -1,9 +1,8 @@
-package modelo;
+package br.ufrj;
 
 public class formDisciplina {
-	//variavel de controle pra alteração
 	@Obrigatorio( false )
-	String cod_antigo;
+	String id;
 	
     @Obrigatorio( true )
 	String codigo;
@@ -26,8 +25,8 @@ public class formDisciplina {
 		return ementa;
 	}
 	
-	public String getCodAntigo(){
-		return cod_antigo;
+	public String getId(){
+		return id;
 	}
 	
 	public void setCodigo(String codigo){
@@ -42,7 +41,7 @@ public class formDisciplina {
 		this.ementa = ementa;
 	}
 	
-	public void setCodAntigo(String cod_antigo){
-		this.cod_antigo = cod_antigo;
+	public void setId(String id){
+		this.id = id;
 	}
 }

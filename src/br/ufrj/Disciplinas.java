@@ -1,4 +1,4 @@
-package modelo;
+package br.ufrj;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -19,7 +19,7 @@ public class Disciplinas {
 	ArrayList<formDisciplina> disciplinas = new ArrayList<formDisciplina>();
 	HttpServletRequest request;
 	HttpServletResponse response;
-	File arquivo = new File("/home/defense/workspace/trabp2/data/disciplinas.csv");
+	File arquivo = new File("/home/defense/workspace/trabalhofinal/csvs/disciplinas.csv");
 	
 	public Disciplinas(HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException{
 		this.CarregaDados();
@@ -33,10 +33,12 @@ public class Disciplinas {
 		while(scan.hasNextLine()){
             String linha = scan.nextLine();
             String[] dados = linha.split(",");
-            String disc_codigo = dados[0];
-            String disc_nome = dados[1];
-            String disc_ementa = dados[2];
+            String disc_id = dados[0];
+            String disc_codigo = dados[1];
+            String disc_nome = dados[2];
+            String disc_ementa = dados[3];
             formDisciplina form = new formDisciplina();
+            form.setId(disc_id);
             form.setCodigo(disc_codigo);
             form.setNome(disc_nome);
             form.setEmenta(disc_ementa);
@@ -48,7 +50,7 @@ public class Disciplinas {
 	private void SalvaDados() throws IOException{
 		String dados = "";
 		for(formDisciplina d : disciplinas){
-			dados += d.codigo.toString() + "," + d.nome + "," + d.ementa + "\n";
+			dados += d.id + "," + d.codigo.toString() + "," + d.nome + "," + d.ementa + "\n";
 		}
 		FileWriter fw = new FileWriter(arquivo.getAbsoluteFile());
 		BufferedWriter bw = new BufferedWriter(fw);
@@ -56,12 +58,18 @@ public class Disciplinas {
 		bw.close();
 	}
 	
-
+	private String pegaUltimoId(){
+		if (this.disciplinas != null && !this.disciplinas.isEmpty()) {
+			return this.disciplinas.get(this.disciplinas.size() - 1).id;
+		}else{
+			return "0";
+		}
+	}
 	
-	//pega disciplina pelo codigo
-	public formDisciplina getDisciplina(String disc_cod){
+	//Pega disciplina pelo ID
+	public formDisciplina getDisciplina(String string){
 		for(formDisciplina d: disciplinas){
-			if(d.codigo.equals(disc_cod)){
+			if(d.id.equals(string)){
 				return d;
 			}
 		}
@@ -74,32 +82,34 @@ public class Disciplinas {
 	 */
 	
 	public void Insere(formDisciplina f) throws IOException{
+		Integer id = Integer.valueOf(this.pegaUltimoId()) + 1;
+		f.setId(id.toString());
 		this.disciplinas.add(f);
 		this.SalvaDados();
 		
-		response.sendRedirect("/trabp2/do/?control=Disciplinas&action=Exibir");
+		response.sendRedirect(request.getRequestURL() + "?control=Disciplinas&action=Exibir");
 		return;
 	}
 	
-	public void Deleta(formDisciplina f) throws IOException, ServletException{
-		formDisciplina d = this.getDisciplina(f.codigo);
+	public void Deleta(String disc_id) throws IOException, ServletException{
+		formDisciplina d = this.getDisciplina(disc_id);
 		if(d != null){
 			this.disciplinas.remove(disciplinas.indexOf(d));
 			this.SalvaDados();
 		}
-		
-		response.sendRedirect("/trabp2/do/?control=Disciplinas&action=Exibir");
+		response.sendRedirect(request.getRequestURL() + "?control=Disciplinas&action=Exibir");
 		return;
 	}
 	
 	public void Altera(formDisciplina f) throws IOException, ServletException{
-		formDisciplina d = this.getDisciplina(f.getCodAntigo());
+		formDisciplina d = this.getDisciplina(f.getId());
 		if(d != null){
 			disciplinas.set(disciplinas.indexOf(d), f);
 			this.SalvaDados();
 		}
 		
-		response.sendRedirect("/trabp2/do/?control=Disciplinas&action=Exibir");
+		
+		response.sendRedirect(request.getRequestURL() + "?control=Disciplinas&action=Exibir");
 		return;
 	}
 	
@@ -108,11 +118,12 @@ public class Disciplinas {
 	 * */
 	public void Exibir() throws ServletException, IOException{
 		this.request.setAttribute("discs", this.disciplinas);
+		
 		this.request.getRequestDispatcher( "/disciplinas/exibir.jsp" ).forward( request, response );
 	}
 	
-	public void Alterar(formDisciplina f) throws ServletException, IOException{
-		formDisciplina d = this.getDisciplina(f.getCodAntigo());
+	public void Alterar(String disc_id) throws ServletException, IOException{
+		formDisciplina d = this.getDisciplina(disc_id);
 		this.request.setAttribute("disciplina", d);
 		this.request.getRequestDispatcher( "/disciplinas/alterar.jsp" ).forward( request, response );
 	}

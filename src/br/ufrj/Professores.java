@@ -1,4 +1,4 @@
-package modelo;
+package br.ufrj;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -23,7 +23,7 @@ public class Professores {
 	ArrayList<formProfessor> professores = new ArrayList<formProfessor>();
 	HttpServletRequest request;
 	HttpServletResponse response;
-	File arquivo = new File("/home/defense/workspace/trabp2/data/professores.csv");
+	File arquivo = new File("/home/defense/workspace/trabalhofinal/csvs/professores.csv");
 	
 	public Professores(HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException{
 		this.CarregaDados();
@@ -37,9 +37,11 @@ public class Professores {
 		while(scan.hasNextLine()){
             String linha = scan.nextLine();
             String[] dados = linha.split(",");
-            String prof_nome = dados[0];
-            String prof_email = dados[1];
+            String prof_id = dados[0];
+            String prof_nome = dados[1];
+            String prof_email = dados[2];
             formProfessor form = new formProfessor();
+            form.setId(prof_id);
             form.setNome(prof_nome);
             form.setEmail(prof_email);
             this.professores.add(form);
@@ -50,7 +52,7 @@ public class Professores {
 	private void SalvaDados() throws IOException{
 		String dados = "";
 		for(formProfessor p : this.professores){
-			dados += p.getNome() + "," + p.getEmail() + "\n";
+			dados += p.getId() + "," + p.getNome() + "," + p.getEmail() + "\n";
 		}
 		FileWriter fw = new FileWriter(this.arquivo.getAbsoluteFile());
 		BufferedWriter bw = new BufferedWriter(fw);
@@ -58,10 +60,18 @@ public class Professores {
 		bw.close();
 	}
 	
-	//pega professor pelo nome
-	public formProfessor getProfessor(String prof_nome){
+	private String pegaUltimoId(){
+		if (this.professores != null && !this.professores.isEmpty()) {
+			return this.professores.get(this.professores.size() - 1).id;
+		}else{
+			return "0";
+		}
+	}
+	
+	//pega professor pelo id
+	public formProfessor getProfessor(String prof_id){
 		for(formProfessor f: this.professores){
-			if(f.getNome().equals(prof_nome)){
+			if(f.getId().equals(prof_id)){
 				return f;
 			}
 		}
@@ -72,24 +82,26 @@ public class Professores {
 	 * Insere novo professor no ArrayList professores e salva os dados no CSV
 	 */
 	public void Insere(formProfessor f) throws IOException{
+		Integer id = Integer.valueOf(this.pegaUltimoId()) + 1;
+		f.setId(id.toString());
 		this.professores.add(f);
 		this.SalvaDados();
 		
-		response.sendRedirect("/trabp2/do/?control=Professores&action=Exibir");
+		response.sendRedirect(request.getRequestURL() + "?control=Professores&action=Exibir");
 		return;
 	}
 	
 	/*
 	 * Remove professor dado um nome
 	 */
-	public void Deleta(formProfessor f) throws IOException{
-		formProfessor p = this.getProfessor(f.getNome());
+	public void Deleta(String prof_id) throws IOException{
+		formProfessor p = this.getProfessor(prof_id);
 		if(p != null){
 			this.professores.remove(this.professores.indexOf(p));
 			this.SalvaDados();
 		}
-		
-		response.sendRedirect("/trabp2/do/?control=Professores&action=Exibir");
+		System.out.println(prof_id);
+		response.sendRedirect(request.getRequestURL() + "?control=Professores&action=Exibir");
 		return;
 	}
 	
@@ -97,13 +109,14 @@ public class Professores {
 	 * Altera professor
 	 */
 	public void Altera(formProfessor f) throws IOException{
-		formProfessor p = this.getProfessor(f.getNome());
+		formProfessor p = this.getProfessor(f.getId());
 		if(p != null){
 			this.professores.set(this.professores.indexOf(p), f);
 			this.SalvaDados();
 		}
 		
-		response.sendRedirect("/trabp2/do/?control=Professores&action=Exibir");
+		System.out.println(f.id + f.nome + f.email);
+		response.sendRedirect(request.getRequestURL() + "?control=Professores&action=Exibir");
 		return;
 	}
 	
@@ -115,8 +128,8 @@ public class Professores {
 		this.request.getRequestDispatcher( "/professores/exibir.jsp" ).forward( request, response );
 	}
 	
-	public void Alterar(formProfessor f) throws ServletException, IOException{
-		formProfessor p = this.getProfessor(f.getNomeAntigo());
+	public void Alterar(String prof_id) throws ServletException, IOException{
+		formProfessor p = this.getProfessor(prof_id);
 		this.request.setAttribute("professor", p);
 		this.request.getRequestDispatcher( "/professores/alterar.jsp" ).forward( request, response );
 	}

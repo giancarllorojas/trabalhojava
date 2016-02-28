@@ -4,16 +4,22 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Alterando professor: <c:out value='${professor.nome}' /></title>
+<title>Alterando professor</title>
+<link rel="stylesheet" type="text/css" href="../estilo.css">
+
 </head>
 <body>
+<div class="topo">
+	<h2><a  class="titulo" href="${pageContext.request.contextPath}">Trabalho Final - JAVA</a></h2>
+</div>
+
 	<form method="GET" action="">
 		Nome: <input type="text" name="Nome" value="<c:out value='${professor.nome}'/>"><br>
 		Email: <input type="text" name="Email" value="<c:out value='${professor.email}'/>"><br>
 		<input type="submit" value="Alterar"/>
 		<input type="hidden" name="control" value="Professores" />
 		<input type="hidden" name="action" value="Altera" />
-		<input type="hidden" name="NomeAntigo" value="${professor.nome}" />
+		<input type="hidden" name="Id" value="${professor.id}" />
 	</form>
 </body>
 </html>

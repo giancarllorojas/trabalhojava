@@ -1,4 +1,4 @@
-package modelo;
+package br.ufrj;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -23,7 +23,7 @@ public class Salas {
 	ArrayList<formSala> salas = new ArrayList<formSala>();
 	HttpServletRequest request;
 	HttpServletResponse response;
-	File arquivo = new File("/home/defense/workspace/trabp2/data/salas.csv");
+	File arquivo = new File("/home/defense/workspace/trabalhofinal/csvs/salas.csv");
 	
 	public Salas(HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException{
 		this.CarregaDados();
@@ -37,9 +37,11 @@ public class Salas {
 		while(scan.hasNextLine()){
 			String linha = scan.nextLine();
             String[] dados = linha.split(",");
-            String sala_numero = dados[0];
-            String sala_capacidade = dados[1];
+            String sala_id = dados[0];
+            String sala_numero = dados[1];
+            String sala_capacidade = dados[2];
             formSala form = new formSala();
+            form.setId(sala_id);
             form.setNumero(sala_numero);
             form.setCapacidade(sala_capacidade);
             this.salas.add(form);
@@ -50,7 +52,7 @@ public class Salas {
 	private void SalvaDados() throws IOException{
 		String dados = "";
 		for(formSala s : this.salas){
-			dados += s.getNumero() + "," + s.getCapacidade() + "\n";
+			dados += s.getId() + "," + s.getNumero() + "," + s.getCapacidade() + "\n";
 		}
 		FileWriter fw = new FileWriter(this.arquivo.getAbsoluteFile());
 		BufferedWriter bw = new BufferedWriter(fw);
@@ -58,10 +60,18 @@ public class Salas {
 		bw.close();
 	}
 	
-	//pega sala pelo numero
-	public formSala getSala(String sala_numero){
+	private String pegaUltimoId(){
+		if (this.salas != null && !this.salas.isEmpty()) {
+			return this.salas.get(this.salas.size() - 1).id;
+		}else{
+			return "0";
+		}
+	}
+	
+	//pega sala pelo Id
+	public formSala getSala(String sala_id){
 		for(formSala f: this.salas){
-			if(f.getNumero().equals(sala_numero)){
+			if(f.getId().equals(sala_id)){
 				return f;
 			}
 		}
@@ -72,24 +82,26 @@ public class Salas {
 	 * Insere nova Sala no ArrayList salase salva os dados no CSV
 	 */
 	public void Insere(formSala f) throws IOException{
+		Integer id = Integer.valueOf(this.pegaUltimoId()) + 1;
+		f.setId(id.toString());
 		this.salas.add(f);
 		this.SalvaDados();
 		
-		response.sendRedirect("/trabp2/do/?control=Salas&action=Exibir");
+		response.sendRedirect(request.getRequestURL() + "?control=Salas&action=Exibir");
 		return;
 	}
 	
 	/*
 	 * Remove sala dado um numero
 	 */
-	public void Deleta(formSala f) throws IOException{
-		formSala s = this.getSala(f.getNumero());
+	public void Deleta(String sala_id) throws IOException{
+		formSala s = this.getSala(sala_id);
 		if(s != null){
 			this.salas.remove(this.salas.indexOf(s));
 			this.SalvaDados();
 		}
 		
-		response.sendRedirect("/trabp2/do/?control=Salas&action=Exibir");
+		response.sendRedirect(request.getRequestURL() + "?control=Salas&action=Exibir");
 		return;
 	}
 	
@@ -97,13 +109,13 @@ public class Salas {
 	 * Altera sala
 	 */
 	public void Altera(formSala f) throws IOException{
-		formSala s = this.getSala(f.getNumero());
+		formSala s = this.getSala(f.getId());
 		if(s != null){
 			this.salas.set(this.salas.indexOf(s), f);
 			this.SalvaDados();
 		}
 		
-		response.sendRedirect("/trabp2/do/?control=Salas&action=Exibir");
+		response.sendRedirect(request.getRequestURL() + "?control=Salas&action=Exibir");
 		return;
 	}
 	
@@ -115,8 +127,8 @@ public class Salas {
 		this.request.getRequestDispatcher( "/salas/exibir.jsp" ).forward( request, response );
 	}
 	
-	public void Alterar(formSala f) throws ServletException, IOException{
-		formSala s = this.getSala(f.getNumeroAntigo());
+	public void Alterar(String sala_id) throws ServletException, IOException{
+		formSala s = this.getSala(sala_id);
 		this.request.setAttribute("sala", s);
 		this.request.getRequestDispatcher( "/salas/alterar.jsp" ).forward( request, response );
 	}

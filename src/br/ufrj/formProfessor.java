@@ -1,9 +1,8 @@
-package modelo;
+package br.ufrj;
 
 public class formProfessor {
-	//variavel de controle
 	@Obrigatorio( false )
-	String nome_antigo;
+	String id;
 	
 	@Obrigatorio( true )
 	String nome;
@@ -19,8 +18,8 @@ public class formProfessor {
 		return this.email;
 	}
 	
-	public String getNomeAntigo(){
-		return this.nome_antigo;
+	public String getId(){
+		return this.id;
 	}
 	
 	public void setNome(String nome){
@@ -31,7 +30,7 @@ public class formProfessor {
 		this.email = email;
 	}
 	
-	public void setNomeAntigo(String nome_antigo){
-		this.nome_antigo = nome_antigo;
+	public void setId(String id){
+		this.id = id;
 	}
 }

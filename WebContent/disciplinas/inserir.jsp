@@ -4,8 +4,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Inserindo nova disciplina</title>
+<link rel="stylesheet" type="text/css" href="../estilo.css">
 </head>
 <body>
+<body>
+<div class="topo">
+	<h2><a  class="titulo" href="${pageContext.request.contextPath}">Trabalho Final - JAVA</a></h2>
+</div>
+
 	<form method="GET" action="">
 		Código: <input type="text" name="Codigo"/><br>
 		Nome: <input type="text" name="Nome"><br>

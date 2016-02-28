@@ -1,4 +1,4 @@
-package modelo;
+package br.ufrj;
 
 import java.lang.annotation.*;
 

@@ -4,9 +4,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Alterando disciplina: <c:out value='${disciplina.nome}' /></title>
+<title>Alterando disciplina</title>
+<link rel="stylesheet" type="text/css" href="../estilo.css">
 </head>
 <body>
+<body>
+<div class="topo">
+	<h2><a  class="titulo" href="${pageContext.request.contextPath}">Trabalho Final - JAVA</a></h2>
+</div>
+
 	<form method="GET" action="">
 		Código: <input type="text" name="Codigo" value="<c:out value='${disciplina.codigo}'/>"/><br>
 		Nome: <input type="text" name="Nome" value="<c:out value='${disciplina.nome}'/>"><br>
@@ -14,7 +20,7 @@
 		<input type="submit" value="Alterar"/>
 		<input type="hidden" name="control" value="Disciplinas" />
 		<input type="hidden" name="action" value="Altera" />
-		<input type="hidden" name="CodAntigo" value="${disciplina.codigo}" />
+		<input type="hidden" name="Id" value="${disciplina.id}" />
 	</form>
 </body>
 </html>

@@ -7,23 +7,29 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Exibindo Disciplinas</title>
+<link rel="stylesheet" type="text/css" href="../estilo.css">
+
 </head>
 <body>
+<div class="topo">
+	<h2><a  class="titulo" href="${pageContext.request.contextPath}">Trabalho Final - JAVA</a></h2>
+</div>
+
 <h2>Lista de professores</h2>
-<table border="1">
+<table border="1" class="tabela">
 	<tr>
 		<td>Nome</td>
 		<td>Email</td>
 	</tr>
-	<c:forEach items="${profs}" var="current">
+	<c:forEach items="${profs}" var="i">
 	        <tr>
-	          <td><c:out value="${current.nome}" /></td>
-	          <td><c:out value="${current.email}" /></td>
-	          <td><a href="?control=Professores&action=Deleta&Nome=<c:out value='${current.nome}' />&Email=<c:out value='${current.email}' />" >Deletar</a></td>
-	          <td><a href="?control=Professores&action=Alterar&NomeAntigo=<c:out value='${current.nome}' />&Nome=<c:out value='${current.nome}' />&Email=<c:out value='${current.email}' />" >Alterar</a></td>
+	          <td><c:out value="${i.nome}" /></td>
+	          <td><c:out value="${i.email}" /></td>
+	          <td><a href="?control=Professores&action=Deleta&Id=<c:out value='${i.id}' />">Deletar</a></td>
+	          <td><a href="?control=Professores&action=Alterar&Id=<c:out value='${i.id}' />" >Alterar</a></td>
 	        </tr>
 	</c:forEach>
-</table>
+</table><br>
 <a href="?control=Professores&action=Inserir">Cadastrar novo professor</a>
 </body>
 </html>
